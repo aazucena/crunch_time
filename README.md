@@ -26,6 +26,8 @@ Crunch Time transforms procrastination and stress-related experiences into an en
 ## Video
 
 ## Contributions
+- Aldrin Azucena
+- Sophia Mai
 
 ## Resources
 
