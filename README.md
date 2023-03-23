@@ -2,8 +2,7 @@
 
 ## Description
 
-Crunch Time takes in the experience based on stress & procrastination and is transformed into an interactive game. The game involves an Alarm Clock modified with an Arduino to interact with the Electron game app interface, including a blanket & pillow to set in the premise of the game. Crunch Time is an interactive, action-paced survival puzzle game that has the player remember the 4-coded pin for the alarm clock. The player must rest on their "bed" to start the round to wait for the time it alarms. Once it alarms, you have to enter the 4 inputs to get the right pattern within a certain amount of time. If the player successfully enters the code within the duration, it loops back as it increases in difficulty. IF the player lost, the game interface shows the results of the game with the number of rounds the player has gone through and the best time recorded as well.
-
+Crunch Time transforms procrastination and stress-related experiences into an engaging game. The game uses an alarm clock that has been adapted with an Arduino to communicate with the Electron game app interface. A blanket and pillow are also included in the game. Crunch Time is an interactive, initiative survival puzzle game in which the player must remember the 4-coded pin for the alarm clock. The player must lay down on their "bed" and wait for the alarm to ring to start the round. To acquire the correct pattern within a set length of time after it alerts, you must enter the 4 inputs. If the player correctly inputs the code within the time limit, the game loops back as the difficulty increases. If the player lost, the gaming interface displays the results of the match along with the number of rounds they completed and their best time.
 
 ## Requirements
 
