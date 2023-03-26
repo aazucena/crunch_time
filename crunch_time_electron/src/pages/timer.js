@@ -1,6 +1,6 @@
 import moment from "moment/moment";
 
-const timer = (props) => {
+const timer = async(props) => {
 	let time = moment().format('h:mm:ss A')
 	return `<div class='container' id="timer">
 		<div class='header'>

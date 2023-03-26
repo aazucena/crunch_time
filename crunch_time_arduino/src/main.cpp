@@ -18,6 +18,8 @@ int buttons[MAX_BUTTONS] = { 5, 6, 7, 8 };
 
 int combination[MAX_BUTTONS] = { 8, 7, 6 ,5 };
 int inputs[MAX_BUTTONS];
+int button_state[MAX_BUTTONS] = { 0, 0, 0, 0 };
+int last_button_state[MAX_BUTTONS] = { 0, 0, 0, 0 };
 int input = 0;
 bool is_entered[MAX_BUTTONS] = { false, false, false, false };
 bool start_game = true;
@@ -41,7 +43,7 @@ void loop(){
 }
 
 void game() {
-  if (allInputsEntered() == false) {
+  if (input < MAX_BUTTONS) {
     for (int i=0; i < MAX_BUTTONS; i++){
       buttonState(i);
     }
@@ -55,19 +57,10 @@ void game() {
   }
 }
 
-
-bool allInputsEntered() {
-  bool result = true;
-  for (int i=0; i < MAX_BUTTONS; i++){
-    result = result && is_entered[i];
-  }
-  return result;
-}
-
 bool checkCombinations() {
   bool result = true;
   for (int i=0; i < MAX_BUTTONS; i++){
-   	bool comp = inputs[i] == combination[i];
+    bool comp = inputs[i] == combination[i];
     result = result && comp;
     inputs[i] = inputs[i + 1];
   }
@@ -75,24 +68,27 @@ bool checkCombinations() {
 }
 
 void reset() {
-  for (int i=0; i < MAX_BUTTONS; i++){
-   	is_entered[i] = false;
-  }
   start_game = false;
+  input = 0;
+  for (int i=0; i < MAX_BUTTONS; i++){
+    button_state[i] = 0;
+    last_button_state[i] = 0;
+  }
   delay(200);
 }
 
 
 void buttonState(int index) {
   int pin = buttons[index];
-  if (is_entered[index] == false) {
-    int buttonPushed = digitalRead(pin);
-    if (buttonPushed == HIGH) {
+  button_state[index] = digitalRead(pin);
+  if (button_state[index] != last_button_state[index]) {
+    if (button_state[index] == HIGH) {
       Serial.print("Button Pin # ");
       Serial.println(pin);
       inputs[input] = pin;
-      input = (input + 1) % MAX_BUTTONS;
-      is_entered[index] = true;
+      input = (input + 1);
     }
+    delay(50);
   }
+  last_button_state[index] = button_state[index];
 }

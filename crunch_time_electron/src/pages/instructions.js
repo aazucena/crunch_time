@@ -1,5 +1,18 @@
-const instructions = (props) => {
-
+import { SerialPort } from 'serialport'
+import { port } from '../utils/port.js'
+let loading_dots = 0;
+const instructions = async(props) => {
+	let button = await SerialPort.list().then((ports, err) => {
+		console.log("🚀 ~ file: instructions.js:6 ~ button ~ ports:", ports)
+		if (err || ports.length <= 0 || !ports.some((port) => port.path === "COM4")) {
+			let dots = new Array(loading_dots).fill('.').join('')
+			loading_dots = (loading_dots + 1) % 4
+			return `<div id="play-button" class='button disabled' disabled=true>Searching for Alarm Clock${dots}<div>`
+		} else {
+			return `<div id="play-button" class='button'>Play</div>`
+		}
+		
+	})
 
 	return `<div class='container' id="instructions">
 		<div class='header'>
@@ -17,9 +30,8 @@ const instructions = (props) => {
 				<span class="list-item">8. If you win, you will start to play again in a next round with an increased difficulty</span>
 				<span class="list-item">9. If you lose, the game will display the results including number of rounds completed & best time</span>
 				<span class="list-item">10. Have fun!</span>
-				
 			</div>
-			<div id="play-button" class='button'>Play</div>
+			${button}
 		</div>
 	</div>`
 };

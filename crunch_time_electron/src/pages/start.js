@@ -1,4 +1,4 @@
-const start = (props) =>
+const start = async(props) =>
     `<div class='container' id="start">
 		<div class='header'>
 			<div class='title'>Crunch Time</div>
