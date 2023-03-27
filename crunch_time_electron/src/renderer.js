@@ -459,7 +459,7 @@ const LeaderboardFormPage = async() => {
 
       let name = $('#leaderboard-name-input').val()
       $('#leaderboard-name-input').on('change', (event) => {
-        if (["",null,undefined].includes(name)) {
+        if (name !== "") {
           $('#submit-button').addClass('disabled')
         } else {
           name = $('#leaderboard-name-input').val()
