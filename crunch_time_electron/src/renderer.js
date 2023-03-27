@@ -28,26 +28,37 @@
 
 import './assets/styles/_index.sass';
 
+import leaderboard from './assets/data/data.json'
+
 import render from './utils/render.js';
 import next from './utils/next.js';
 import update from './utils/update.js';
 import { randomInteger, combinations } from './utils/index.js';
 import { retrieveSound } from './utils/music.js';
+import { SerialPort } from 'serialport'
+import  { ReadlineParser } from '@serialport/parser-readline'
+import fs from 'fs'
+
 
 import { Howl } from 'howler';
 import $ from 'jquery';
 import moment from 'moment';
+import lodash from 'lodash';
 
 let _root = $('#app')
 let body = $('body')
-let round = 5
+let round = 1
 let timeSpeed = 1000
 
+let records = leaderboard.records
+
+let state = '';
+
 let color_codes = {
-  '5': 'red', 
-  '6': 'green', 
-  '7': 'blue', 
-  '8': 'yellow', 
+  "5": 'red', 
+  "4": 'green', 
+  "3": 'blue', 
+  "2": 'yellow', 
 }
 
 let alarm_jukebox = [
@@ -163,8 +174,55 @@ let round_settings = {
 
 let combination = []
 
+let inputs = []
+
+let record = {
+  rounds: 1,
+}
+
+const port = new SerialPort({
+  path: 'COM4',
+  baudRate: 9600,
+  autoOpen: false,
+})
+
+port.open(function (err) {
+  if (err) {
+    return console.log('Error opening port: ', err.message)
+  }
+})
+
+const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }))
+parser.on('data', (data) => {
+  switch(state) {
+    case 'instructions':
+      if (!isNaN(Number(data))) {
+        let color = color_codes[data]
+        $(`#arduino-button-${data}`).css({ 'background-color': color })
+        setTimeout(() => {
+          $(`#arduino-button-${data}`).css({ 'background-color': 'rgba(170 ,170 ,170, 25%)' })
+        }, 100)
+      }
+      break
+    case 'countdown':
+      if (!isNaN(Number(data))) {
+        if (inputs.length < 4) {
+          console.log(data)
+          inputs.push(data)
+          console.log("🚀 ~ file: renderer.js:210 ~ parser.on ~ inputs:", inputs)
+        } else {
+          inputs = []
+          console.log("🚀 ~ file: renderer.js:210 ~ parser.on ~ inputs:", inputs)
+        }
+      }
+      break
+    default:
+      break
+  }
+})
+
 const StartPage = () => {
-  
+  state = 'start'
   render('start').then((page) => {
     _root.hide().html(page).fadeIn(3000)
     $("#start-button").on('click', () => {
@@ -175,23 +233,33 @@ const StartPage = () => {
 
 StartPage()
 const InstructionsPage = () => {
-  next('instructions')
-  
-  let interval = setInterval(() => {
+  state = 'instructions'
+  let isDisabled = $("#play-button").hasClass('.disabled')
+  if (isDisabled === true) {
+    next('instructions')
+    let interval = setInterval(() => {
 
-      update('instructions').then(() => {
-        if (!$("#play-button").hasClass('disabled')) {
-          $("#play-button").on('click', () => {
-            RoundPage()
-            clearInterval(interval)
+        update('instructions').then(() => {
+          if (!$("#play-button").hasClass('.disabled')) {
+            $("#play-button").on('click', () => {
+              RoundPage()
+              clearInterval(interval)
+            })
+          }
         })
-        }
-      })
-  }, 1000)
+    }, 1000)
+  } else {
+    next('instructions').then(() => {
+        $("#play-button").on('click', () => {
+          RoundPage()
+        })
+    })
+  }
   
 }
 
 const RoundPage = () => {
+  state = 'round'
   body.css({ 'background-color': 'transparent', transition: 'background-color 1s ease-in-out' })
   next('status', { title: `Round #${round}` })
   setTimeout(() => {
@@ -204,7 +272,7 @@ const RoundPage = () => {
 }
 
 const GamePage = () => {
-  let settings = round_settings[round]
+  let settings = round >= 10 ? round_settings[10] : round_settings[round]
   next('status', { title: "Remember the combinations!" })
   
   setTimeout(() => {
@@ -220,9 +288,10 @@ const GamePage = () => {
 
 
 const PatternsPage = () => {
+  state = 'patterns'
   let combs = combinations(Object.keys(color_codes))
   combination = combs[randomInteger(0, combs.length)]
-  // console.log("🚀 ~ file: renderer.js:88 ~ setTimeout ~ combination:", combination)
+  console.log("🚀 ~ file: renderer.js:88 ~ setTimeout ~ combination:", combination)
 
   let run = () => {
     combination.forEach((code, i) => {
@@ -259,6 +328,7 @@ const PatternsPage = () => {
 }
 
 const StartGamePage = () => {
+  state = 'start_game'
   next('status', { title: 'Go to your bed, and sleep'})
   setTimeout(() => {
     TimerPage()
@@ -266,6 +336,7 @@ const StartGamePage = () => {
 }
 
 const TimerPage = async() => {
+  state = 'timer'
   next('timer')
   let start = moment()
   setTimeout(() => {
@@ -288,7 +359,6 @@ const TimerPage = async() => {
       let randomCheck = rand % 2 === 0 
       // console.log("🚀 ~ file: renderer.js:167 ~ interval ~ randomCheck:", randomCheck, rand)
       if (randomCheck) {
-        console.log("STOP")
         sound.stop()
         body.css({ 'background-color': 'transparent', color: 'black', transition: 'none',  })
         CountdownPage()
@@ -299,7 +369,8 @@ const TimerPage = async() => {
 }
 
 const CountdownPage = async() => {
-  let settings = round_settings[round]
+  state = 'countdown'
+  let settings = round >= 10 ? round_settings[10] : round_settings[round]
   let jukebox = alarm_jukebox.filter((music) => {
     let [hours, minutes, seconds] = music.duration.split(':').map((n) => Number(n)) 
     let duration = ((hours*60)+minutes*60)+seconds
@@ -316,14 +387,34 @@ const CountdownPage = async() => {
   let start = settings.countdown >= 60 ? moment().hours(0).minutes(1).seconds(0) : moment().hours(0).minutes(0).seconds(settings.countdown)
   update('countdown', { time: start })
   let counter = settings.countdown
+  let status = null
   
   body.css({ 'background-color': 'red', color: 'black', transition: 'none',  })
   let interval = setInterval(() => {
-    update('countdown', { time: start })
-    if (counter < 0) {
+    update('countdown', { time: start, status })
+    if (inputs.length >= 4) {
+      let compareCheck = lodash.isEqual(inputs, combination)
+      console.log(inputs, combination)
+      if (compareCheck === true) {
+        sound.stop()
+        _root.hide()
+        body.css({ 'background-color': 'transparent', color: 'black', transition: 'none',  })
+        inputs = []
+        WinnerPage()
+        clearInterval(interval)
+      } else {
+        status = 'Your combination is wrong'
+        inputs = []
+        setTimeout(() => {
+          status = null
+          $('.status').html('')
+        }, 2000)
+      }
+    } else if (counter < 0) {
       sound.stop()
       _root.hide()
       body.css({ 'background-color': 'transparent', color: 'black', transition: 'none',  })
+      LoserPage()
       clearInterval(interval)
     } else {
       if (moment(start).seconds() >= 0) {
@@ -331,42 +422,88 @@ const CountdownPage = async() => {
       }
       counter--
     }
-
   }, 1000)
 }
 
+const WinnerPage = async() => {
+  state = 'winner'
+  body.css({ 'background-color': '#EA6A45', color: 'black', transition: 'background-color color 1s ease-in-out',  })
+  next('status', { title: `You won!` }).then(() => {
+    setTimeout(() => {
+      next('status', { title: `Onto the next round!` }).then(() => {
+        round++
+        record.rounds = round
+        setTimeout(() => {
+          RoundPage()
+        }, 12000)
+      })
+    }, 6000)
+  })
+}
 
-// console.log('👋 This message is being logged by "renderer.js", included via webpack');
+const LoserPage = async() => {
+  state = 'loser'
+  body.css({ 'background-color': '#EA6A45', color: 'black', transition: 'background-color color 1s ease-in-out',  })
+  next('status', { title: `You lost...` }).then(() => {
+    setTimeout(() => {
+      _root.fadeOut(1000)
+      LeaderboardFormPage()
+    }, 6000)
+  })
+}
 
-// const { SerialPort } = require('serialport')
-// const tableify = require('tableify')
+const LeaderboardFormPage = async() => {
+  state = 'leaderboard_form'
+  setTimeout(() => {
+    next('enter_record').then(() => {
 
-// async function listSerialPorts() {
-//   await SerialPort.list().then((ports, err) => {
-//     if(err) {
-//       document.getElementById('error').textContent = err.message
-//       return
-//     } else {
-//       document.getElementById('error').textContent = ''
-//     }
+      let name = $('#leaderboard-name-input').val()
+      $('#leaderboard-name-input').on('change', (event) => {
+        if (["",null,undefined].includes(name)) {
+          $('#submit-button').addClass('disabled')
+        } else {
+          name = $('#leaderboard-name-input').val()
+          $('#submit-button').removeClass('disabled')
+        }
+      })
+      $('#submit-button').on('click', () => {
+        if (!["",null,undefined].includes(name)) {
+          _root.fadeOut(1000)
+          let item = {
+            name: name,
+            ...record,
+          }
+          records = [...records, item]
+          console.log("🚀 ~ file: renderer.js:480 ~ $ ~ records:", records)
+          fs.writeFileSync('./assets/data/data.json', JSON.stringify({ records }, null, 2))
+          LeaderboardPage()
+        }
+      })
+      $('#skip-button').on('click', () => {
+        _root.fadeOut(1000)
+        LeaderboardPage()
+      })
+    })
+  }, 1000)
+}
 
-//     if (ports.length === 0) {
-//       document.getElementById('error').textContent = 'No ports discovered'
-//     }
-//     if (ports) {
-//         let tableHTML = tableify(ports)
-//         document.getElementById('ports').innerHTML = tableHTML
-//     }
-//   })
-// }
-
-// function listPorts() {
-//   listSerialPorts();
-//   setTimeout(listPorts, 2000);
-// }
-
-// // Set a timeout that will check for new serialPorts every 2 seconds.
-// // This timeout reschedules itself.
-// setTimeout(listPorts, 2000);
-
-// listSerialPorts()
+const LeaderboardPage = async() => {
+  state = 'end'
+  setTimeout(() => {
+    next('end', { data: records }).then(() => {
+      $('#play-again-button').on('click', () => {
+          _root.fadeOut(1000)
+          round = 1
+          record.rounds = 1
+          RoundPage()
+      })
+      $('#exit-button').on('click', () => {
+        _root.fadeOut(1000)
+        round = 1
+        record.rounds = 1
+        StartPage()
+      })
+    })
+  }, 1000)
+  
+}

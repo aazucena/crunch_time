@@ -8,4 +8,8 @@ module.exports = {
   module: {
     rules: require('./webpack.rules'),
   },
+  externals: {
+    serialport: "commonjs2 serialport",
+    fs:    "commonjs fs",
+  },
 };

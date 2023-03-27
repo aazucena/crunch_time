@@ -1,9 +1,7 @@
 import { SerialPort } from 'serialport'
-import { port } from '../utils/port.js'
 let loading_dots = 0;
 const instructions = async(props) => {
 	let button = await SerialPort.list().then((ports, err) => {
-		console.log("🚀 ~ file: instructions.js:6 ~ button ~ ports:", ports)
 		if (err || ports.length <= 0 || !ports.some((port) => port.path === "COM4")) {
 			let dots = new Array(loading_dots).fill('.').join('')
 			loading_dots = (loading_dots + 1) % 4
@@ -13,6 +11,23 @@ const instructions = async(props) => {
 		}
 		
 	})
+	let footer = await SerialPort.list().then((ports, err) => {
+		if (err || ports.length <= 0 || !ports.some((port) => port.path === "COM4")) {
+			return ``
+		} else {
+			let ele = `<div class="footer">
+				<div class="arduino-buttons">
+					<div class="arduino-button" id="arduino-button-5"></div>
+					<div class="arduino-button" id="arduino-button-4"></div>
+					<div class="arduino-button" id="arduino-button-3"></div>
+					<div class="arduino-button" id="arduino-button-2"></div>
+				</div>
+			</div>`
+			return `\n${ele}`
+		}
+		
+	})
+
 
 	return `<div class='container' id="instructions">
 		<div class='header'>
@@ -32,7 +47,7 @@ const instructions = async(props) => {
 				<span class="list-item">10. Have fun!</span>
 			</div>
 			${button}
-		</div>
+		</div>${footer}
 	</div>`
 };
 

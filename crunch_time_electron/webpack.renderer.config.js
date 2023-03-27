@@ -14,7 +14,13 @@ module.exports = {
   module: {
     rules,
   },
+  resolve: {
+      fallback: {
+          stream: require.resolve('stream-browserify'),
+      },
+  },
   externals: {
     serialport: "commonjs2 serialport", // Ref: https://copyprogramming.com/howto/electron-and-serial-ports
+    fs:    "commonjs fs",
   },
 };

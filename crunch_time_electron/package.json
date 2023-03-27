@@ -40,8 +40,10 @@
     "electron-squirrel-startup": "^1.0.0",
     "howler": "^2.2.3",
     "jquery": "^3.6.4",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "serialport": "^10.5.0",
+    "stream-browserify": "^3.0.0",
     "tableify": "^1.1.1"
   }
 }
