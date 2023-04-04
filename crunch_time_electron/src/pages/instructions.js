@@ -1,4 +1,11 @@
 import { SerialPort } from 'serialport'
+import arrow_path from '../assets/images/arrow.svg'
+
+let arrow = (
+	`<svg class="arrow" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48">
+		<path d=\"M480 696 280 497h400L480 696Z" />
+	</svg>`
+)
 let loading_dots = 0;
 const instructions = async(props) => {
 	let button = await SerialPort.list().then((ports, err) => {
@@ -17,10 +24,10 @@ const instructions = async(props) => {
 		} else {
 			let ele = `<div class="footer">
 				<div class="arduino-buttons">
-					<div class="arduino-button" id="arduino-button-5"></div>
-					<div class="arduino-button" id="arduino-button-4"></div>
-					<div class="arduino-button" id="arduino-button-3"></div>
-					<div class="arduino-button" id="arduino-button-2"></div>
+					<div class="arduino-button" id="arduino-button-5">${arrow}</div>
+					<div class="arduino-button" id="arduino-button-4">${arrow}</div>
+					<div class="arduino-button" id="arduino-button-3">${arrow}</div>
+					<div class="arduino-button" id="arduino-button-2">${arrow}</div>
 				</div>
 			</div>`
 			return `\n${ele}`

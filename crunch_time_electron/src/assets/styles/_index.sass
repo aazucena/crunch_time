@@ -1,5 +1,5 @@
-@import 'variables' 
-@import 'fonts' 
+@import 'variables'
+@import 'fonts'
 @import 'keyframes'
 
 body
@@ -9,6 +9,9 @@ body
 	margin: 0
 	background-color: #EA6A45
 	overflow: hidden
+	&:has(#app > #start)
+		& > #nav
+			display: none
 
 #title-bar
 	-webkit-user-select: none
@@ -26,6 +29,66 @@ body
 		& > .title
 			font-size: .75em
 			font-weight: 900
+
+.navbar
+	display: flex
+	flex-direction: row
+	justify-content: space-between
+	align-items: center
+	padding: 1rem
+	width: 100%
+	z-index: 8888
+	& > .navbar-menu
+		display: flex
+		flex-direction: row
+		justify-content: space-between
+		align-items: center
+		& > .navbar-item
+			display: flex
+			flex-direction: column
+			justify-content: center
+			align-items: center
+			padding: 1rem
+			& > svg
+				fill: black
+				pointer-events: auto
+				cursor: pointer
+			& > #settings:focus
+				outline: none
+			& > #settings:hover
+				animation: rotate-scale-down 0.9375s ease-out both
+			& > #mute:hover,
+			& > #unmute:hover
+				animation: jello-vertical 0.5s both
+			& > .nav-submenu
+				display: flex
+				flex-direction: column
+				justify-content: flex-start
+				align-items: flex-end
+				position: absolute
+				margin-top: 8rem
+				right: 2rem
+				background-color: rgba(0, 0, 0, 50%)
+				padding: 1rem
+				width: 20vmin
+				border-radius: 0.5rem
+				color: white
+				z-index: 5555
+				-webkit-animation: slide-in-fwd-center 0.4s both
+				animation: slide-in-fwd-center 0.4s both
+				& > .nav-subitem
+					pointer-events: auto
+					cursor: pointer
+					width: 100%
+					&:hover
+						color: #e6ca2e
+
+#nav
+	display: flex
+	flex-direction: row
+	justify-content: center
+	width: 100%
+	align-items: center
 
 #app
 	height: 100vh
@@ -84,9 +147,25 @@ body
 			text-align: center
 			padding: 1.25em
 			gap: 0.5rem
+		&#pattern .title
+			transition: none
+			& svg
+				fill: white
+				z-index: 4444
+				&#arrow-none
+					opacity: 0
+					transform: scale(8)
+				&#arrow-5
+					transform: scale(8) rotateZ(180deg)
+				&#arrow-4
+					transform: scale(8) rotateZ(270deg)
+				&#arrow-3
+					transform: scale(8) rotateZ(0deg)
+				&#arrow-2
+					transform: scale(8) rotateZ(90deg)
 		&#instructions
 			justify-content: flex-start !important
-			padding-top: 8rem
+			padding-top: 4rem
 			& > .header
 				display: flex
 				flex-direction: column
@@ -108,11 +187,21 @@ body
 				& > .arduino-button
 					background-color: rgba(#AAA, 25%)
 					border-radius: 50%
-					padding: 3rem
+					padding: 1.5rem
+					&#arduino-button-5 svg
+						transform: scale(1.75) rotateZ(180deg)
+					&#arduino-button-4 svg
+						transform: scale(1.75) rotateZ(270deg)
+					&#arduino-button-3 svg
+						transform: scale(1.75) rotateZ(0deg)
+					&#arduino-button-2 svg
+						transform: scale(1.75) rotateZ(90deg)
+					& svg
+						transform: scale(1.75)
 		&#countdown
 			& > .header > .title
 				font-size: 8rem
-			& > .body 
+			& > .body
 				gap: 1rem
 				& > .status
 					display: flex
@@ -125,6 +214,71 @@ body
 			& > .header > .title
 				font-size: 2rem
 				font-weight: 500
+
+.modal
+	position: absolute
+	left: 0
+	top: 0
+	width: 100%
+	background: rgba(0, 0, 0, 0.5)
+	height: 100%
+	display: flex
+	flex-direction: column
+	justify-content: center
+	align-items: center
+	z-index: 9999
+	& .modal-box
+		display: flex
+		width: 100vmin
+		height: 10
+		background: white
+		aspect-ratio: 3/2
+		justify-content: flex-start
+		flex-direction: column
+		padding: 1.125rem
+		border-radius: 0.875rem
+		& .modal-header
+			display: flex
+			flex-direction: row
+			justify-content: space-between
+			align-items: center
+			padding: 1rem .5rem
+			& .modal-title
+				font-size: 2.5rem
+		& .modal-body
+			display: flex
+			flex-direction: column
+			justify-content: flex-start
+			flex-grow: 1
+			padding: 1rem 0.5rem
+		& .modal-footer
+			display: flex
+			flex-direction: row
+			justify-content: space-between
+			align-items: center
+			padding: 1rem .5rem
+
+table
+	width: 100%
+	border-collapse: collapse
+	overflow: hidden
+	margin-bottom: 20vmin
+
+th, td
+	padding: 1.25rem
+	background-color: rgba(0, 0, 0, 0.5)
+	color: white
+
+th
+	text-align: left
+thead th
+	font-size: 1.75rem 
+	text-transform: uppercase
+	background-color: rgba(0, 0, 0, 0.75)
+
+tbody tr,
+tbody td
+	text-align: left
 
 .list
 	display: flex
@@ -155,6 +309,3 @@ body
 	&:hover:not(.disabled)
 		-webkit-animation: pulsate-bck 1s both
 		animation: pulsate-bck 1s both
-
-
-

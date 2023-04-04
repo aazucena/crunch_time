@@ -20,7 +20,8 @@ const createWindow = () => {
     titleBarOverlay: {
       color: 'transparent',
       symbolColor: 'black',
-    }
+    },
+    fullscreen: true,
   });
 
   // and load the index.html of the app.
@@ -28,7 +29,7 @@ const createWindow = () => {
   
   mainWindow.maximize()
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

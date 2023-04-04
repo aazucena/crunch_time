@@ -25,6 +25,8 @@ export const retrieveSound = async(name) => {
             return (await import('../assets/audio/witch-left-4-dead.mp3')).default
         case 'yakety_sax':
             return (await import('../assets/audio/yakety-sax-music.mp3')).default
+        case 'sad-trombone':
+            return (await import('../assets/audio/sad-trombone.mp3')).default
         default:
             break
     }
