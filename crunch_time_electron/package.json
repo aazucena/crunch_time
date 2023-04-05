@@ -2,7 +2,7 @@
   "name": "crunch_time_electron",
   "productName": "crunch_time_electron",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Electron Desktop App that connects to Arduino to create a game based on Crunch Time",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
