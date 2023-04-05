@@ -110,6 +110,14 @@ let alarm_jukebox = [
 		name: 'yakety_sax',
 		duration: '00:04:34',
 	},
+	{
+		name: 'reveille',
+		duration: '00:00:22',
+	},
+	{
+		name: 'air-raid-siren',
+		duration: '00:00:58',
+	}
 ];
 
 let round_settings = {

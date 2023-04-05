@@ -1,6 +1,6 @@
 # Alarm Music Checklsit
 
--[ ] Nokia Alarm
--[ ] iPhone Alarm
--[ ] Samsung Alarm
--[ ] Military Music
+-[x] Nokia Alarm
+-[x] iPhone Alarm
+-[x] Samsung Alarm
+-[x] Military Music

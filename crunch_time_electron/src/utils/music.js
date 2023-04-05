@@ -25,6 +25,10 @@ export const retrieveSound = async(name) => {
             return (await import('../assets/audio/witch-left-4-dead.mp3')).default
         case 'yakety_sax':
             return (await import('../assets/audio/yakety-sax-music.mp3')).default
+        case 'reveille':
+            return (await import('../assets/audio/reveille.mp3')).default
+        case 'air-raid-siren':
+            return (await import('../assets/audio/air-raid-siren.mp3')).default
         case 'sad-trombone':
             return (await import('../assets/audio/sad-trombone.mp3')).default
         default:
