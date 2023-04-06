@@ -18,7 +18,7 @@ const modal = async(props) => {
           <div class="modal-header">
             <div class="modal-title">${props?.title ?? "Title"}</div>
           </div>
-          <div class="modal-body"></div>
+          <div class="modal-body">${props?.content ?? ""}</div>
           <div class="modal-footer"></div>
         </div>
       </div>`

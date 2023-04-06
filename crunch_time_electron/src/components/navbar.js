@@ -60,7 +60,41 @@ const navbar = async(props) => {
           switch(id) {
             case "credits":
               let modal = (await import('./modal.js')).default
-              modal({ title: 'Credits' })
+              let content = (
+                `<div class="description">
+                  <span class="description-title">Description</span>
+                  <div class="description-body">
+                    The nature of our interactive experience is about the stress students feel as they struggle with time management at school. We want participants to either learn or remember how difficult it can be for students to have a good work-life balance and find the ability to take care of their health. To express this, it would be most effective to do so in a physically demanding way where the participant must use both their mind and body at the same time.
+                  </div>
+                </div>
+                <div class="list">
+                  <span class="list-heading">Images/SVGs</span>
+                  <div class="list-menu">
+                    <div class="list-item">Arrow SVG</div>
+                    <div class="list-item">Settings SVG</div>
+                  </div>
+                  </div>
+                <div class="list">
+                  <span class="list-heading">Music</span>
+                  <div class="list-menu">
+                    <div class="list-item">Air Raid</div>
+                    <div class="list-item">Baby Lullaby</div>
+                    <div class="list-item">Outlast - Dr. Rick Trager Theme</div>
+                    <div class="list-item">Metal Gear Solid 1</div>
+                    <div class="list-item">Resident Evil 2 Remake - Mr. X Theme</div>
+                    <div class="list-item">Reveille</div>
+                    <div class="list-item">Persona 5 - Run Run Run!</div>
+                    <div class="list-item">Sad Trombone</div>
+                    <div class="list-item">Spongebob - Grass Skirt Chase</div>
+                    <div class="list-item">Spongebob - 12th Street Rag</div>
+                    <div class="list-item">Super Mario 64 - SLider</div>
+                    <div class="list-item">Undertale - Run!</div>
+                    <div class="list-item">Left 4 Dead - Witch Theme</div>
+                    <div class="list-item">Yakety Sax</div>
+                  </div>
+                </div>`
+              )
+              modal({ title: 'Credits', content  })
               break
             default:
               break

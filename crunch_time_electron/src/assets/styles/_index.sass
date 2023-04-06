@@ -250,13 +250,39 @@ body
 			flex-direction: column
 			justify-content: flex-start
 			flex-grow: 1
-			padding: 1rem 0.5rem
+			padding: 1rem 1.25rem
 		& .modal-footer
 			display: flex
 			flex-direction: row
 			justify-content: space-between
 			align-items: center
 			padding: 1rem .5rem
+
+.description
+	display: flex
+	flex-direction: column
+	gap: 0.75rem
+	& > .description-title
+		font-size: 1.75rem
+		font-weight: 600
+	& > .description-body
+		padding: 1rem
+.list
+	display: flex
+	flex-direction: column
+	gap: 0.75rem
+	& > .list-heading
+		font-size: 1.75rem
+		font-weight: 600
+	& > .list-menu
+		padding: 1rem
+		display: flex
+		flex-direction: column
+		gap: 1rem
+		& > .list-item
+			display: flex
+			flex-direction: row
+			gap: 0.75rem
 
 table
 	width: 100%

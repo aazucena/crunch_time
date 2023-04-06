@@ -1,0 +1,82 @@
+{
+	"1": {
+		"countdown": 60,
+		"timeouts": {
+			"game_page": 18000,
+			"patterns_page": 1000
+		},
+		"offset": 0
+	},
+	"2": {
+		"countdown": 45,
+		"timeouts": {
+			"game_page": 18000,
+			"patterns_page": 900
+		},
+		"offset": 0
+	},
+	"3": {
+		"countdown": 30,
+		"timeouts": {
+			"game_page": 18000,
+			"patterns_page": 800
+		},
+		"offset": 1
+	},
+	"4": {
+		"countdown": 15,
+		"timeouts": {
+			"game_page": 18000,
+			"patterns_page": 700
+		},
+		"offset": 1
+	},
+	"5": {
+		"countdown": 12,
+		"timeouts": {
+			"game_page": 10000,
+			"patterns_page": 600
+		},
+		"offset": 2
+	},
+	"6": {
+		"countdown": 10,
+		"timeouts": {
+			"game_page": 10000,
+			"patterns_page": 500
+		},
+		"offset": 2
+	},
+	"7": {
+		"countdown": 7,
+		"timeouts": {
+			"game_page": 10000,
+			"patterns_page": 400
+		},
+		"offset": 3
+	},
+	"8": {
+		"countdown": 5,
+		"timeouts": {
+			"game_page": 10000,
+			"patterns_page": 300
+		},
+		"offset": 3
+	},
+	"9": {
+		"countdown": 2,
+		"timeouts": {
+			"game_page": 10000,
+			"patterns_page": 300
+		},
+		"offset": 4
+	},
+	"10": {
+		"countdown": 1,
+		"timeouts": {
+			"game_page": 10000,
+			"patterns_page": 300
+		},
+		"offset": 4
+	}
+}

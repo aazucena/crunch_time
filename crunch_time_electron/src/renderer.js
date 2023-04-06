@@ -30,6 +30,8 @@ import './assets/styles/_index.sass';
 import arrow_svg from './assets/images/arrow.svg';
 
 import leaderboard from './assets/data/data.json';
+import round_settings from './assets/data/settings.json';
+import alarm_jukebox from './assets/data/alarm_jukebox.json';
 
 import render from './utils/render.js';
 import next from './utils/next.js';
@@ -52,7 +54,7 @@ import lodash from 'lodash';
 
 let _root = $('#app');
 let body = $('body');
-let round = 10;
+let round = 1;
 
 let records = leaderboard.records;
 
@@ -63,144 +65,6 @@ let color_codes = {
 	4: 'green',
 	3: 'blue',
 	2: 'yellow',
-};
-
-let alarm_jukebox = [
-	{
-		name: 'outlast',
-		duration: '00:02:17',
-	},
-	{
-		name: 'metal_gear_solid',
-		duration: '00:14:14',
-	},
-	{
-		name: 'mission_impossible',
-		duration: '00:03:27',
-	},
-	{
-		name: 'mr_x',
-		duration: '00:02:17',
-	},
-	{
-		name: 'persona_5',
-		duration: '00:01:57',
-	},
-	{
-		name: 'spongebob_1',
-		duration: '00:00:32',
-	},
-	{
-		name: 'spongebob_2',
-		duration: '00:02:07',
-	},
-	{
-		name: 'super_mario_64',
-		duration: '00:00:53',
-	},
-	{
-		name: 'undertale',
-		duration: '00:15:48',
-	},
-	{
-		name: 'left_4_dead',
-		duration: '00:01:11',
-	},
-	{
-		name: 'yakety_sax',
-		duration: '00:04:34',
-	},
-	{
-		name: 'reveille',
-		duration: '00:00:22',
-	},
-	{
-		name: 'air-raid-siren',
-		duration: '00:00:58',
-	}
-];
-
-let round_settings = {
-	1: {
-		countdown: 60,
-		timeouts: {
-			game_page: 18000,
-      patterns_page: 1000,
-		},
-    offset: 0,
-	},
-	2: {
-		countdown: 45,
-		timeouts: {
-			game_page: 18000,
-      patterns_page: 900,
-		},
-    offset: 0,
-	},
-	3: {
-		countdown: 30,
-		timeouts: {
-			game_page: 18000,
-      patterns_page: 800,
-		},
-    offset: 1,
-	},
-	4: {
-		countdown: 15,
-		timeouts: {
-			game_page: 18000,
-      patterns_page: 700,
-		},
-    offset: 1,
-	},
-	5: {
-		countdown: 12,
-		timeouts: {
-			game_page: 10000,
-      patterns_page: 600,
-		},
-    offset: 2,
-	},
-	6: {
-		countdown: 10,
-		timeouts: {
-			game_page: 10000,
-      patterns_page: 500,
-		},
-    offset: 2,
-	},
-	7: {
-		countdown: 7,
-		timeouts: {
-			game_page: 10000,
-      patterns_page: 400,
-		},
-    offset: 3,
-	},
-	8: {
-		countdown: 5,
-		timeouts: {
-			game_page: 10000,
-      patterns_page: 300,
-		},
-    offset: 3,
-	},
-	9: {
-		countdown: 2,
-		timeouts: {
-			game_page: 10000,
-      patterns_page: 300,
-		},
-    offset: 4,
-	},
-	10: {
-		countdown: 1,
-		timeouts: {
-			game_page: 10000,
-      patterns_page: 300,
-		},
-    offset: 4,
-	},
 };
 
 let combination = [];

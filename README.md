@@ -15,26 +15,41 @@ Crunch Time transforms procrastination and stress-related experiences into an en
 
 ## Instructions
 
+```bash
+
+## Running Game App
+
+cd ./crunch_time_electron # Go to the app folder 
+npm install # Install dependencies
+npm start # STart the Crunch Time Desktop App
+
+```
+
+
 ### How to use it?
 
-## Components used.
+## Components used
+[Components](/docs/parts/parts.csv)
+
 
 ## Circuit Schema
+![Circuit](/docs/diagrams/crunch_time_diagram.png)
 
 ## Images
+![Image](/docs/images/DSC_0095.JPG)
+![Image](/docs/images/DSC_0096.JPG)
+![Image](/docs/images/DSC_0097.JPG)
+![Image](/docs/images/DSC_0098.JPG)
+![Image](/docs/images/DSC_0099.JPG)
+![Image](/docs/images/DSC_0100.JPG)
+![Image](/docs/images/DSC_0101.JPG)
+![Image](/docs/images/DSC_0102.JPG)
+![Image](/docs/images/DSC_0103.JPG)
+![Image](/docs/images/DSC_0104.JPG)
+![Image](/docs/images/IMG_2991.JPG)
 
 ## Video
 
 ## Contributions
 - Aldrin Azucena
 - Sophia Mai
-
-## Resources
-
-### Arduino
-
-### Electron
-
-### 3D Printed Parts
-
-## References
