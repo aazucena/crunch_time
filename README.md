@@ -25,9 +25,6 @@ npm start # STart the Crunch Time Desktop App
 
 ```
 
-
-### How to use it?
-
 ## Components used
 [Components](/docs/parts/parts.csv)
 
