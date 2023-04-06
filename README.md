@@ -49,6 +49,7 @@ npm start # STart the Crunch Time Desktop App
 ![Image](/docs/images/IMG_2991.JPG)
 
 ## Video
+[Youtube Video](https://youtu.be/MAiSOgt4Dq4)
 
 ## Contributions
 - Aldrin Azucena
